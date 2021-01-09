@@ -1,0 +1,17 @@
+type Approval @entity {
+  id: ID!
+  spender: Bytes!
+  value: BigInt!
+}
+
+type LogRebase @entity {
+  id: ID! 
+  totalSupply: BigInt!
+  epoch: BigInt!
+}
+
+type Transfer @entity {
+  id: ID! 
+  to: Bytes!
+  value: BigInt!
+}

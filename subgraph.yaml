@@ -1,0 +1,102 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DittoToken
+    network: binance
+    source:
+      address: "0x7d655c57f71464B6f83811C55D84009Cd9f5221C"
+      abi: DittoToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval(indexed address,indexed address,uint256)
+        - LogRebase(indexed uint256,uint256)
+        - OwnershipRenounced(indexed address)
+        - OwnershipTransferred(indexed address,indexed address)
+        - Transfer(indexed address,indexed address,uint256)
+      abis:
+        - name: DittoToken
+          file: ./abis/DittoToken.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: OwnershipRenounced(indexed address)
+          handler: handleOwnershipRenounced
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: LogRebase(indexed uint256,uint256)
+          handler: handleLogRebase
+        
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: DittoStaking
+    network: binance
+    source:
+      address: "0x27Da7Bc5CcB7c31baaeEA8a04CC8Bf0085017208"
+      abi: DittoStaking
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipRenounced
+        - OwnershipTransferred
+        - Staked
+        - TokensClaimed
+        - TokensLocked
+        - TokensUnlocked
+        - Unstaked
+      abis:
+        - name: DittoStaking
+          file: ./abis/DittoStaking.json
+      eventHandlers:
+        - event: OwnershipRenounced(indexed address)
+          handler: handleOwnershipRenounced
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Staked(indexed address,uint256,uint256,bytes)
+          handler: handleStaked
+        - event: TokensLocked(uint256,uint256,uint256)
+          handler: handleTokensLocked
+        - event: TokensClaimed(indexed address,uint256)
+          handler: handleTokensClaimed
+        - event: Unstaked(indexed address,uint256,uint256,bytes)
+          handler: handlUnstaked
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: DittoPancake
+    network: binance
+    source:
+      address: "0x470BC451810B312BBb1256f96B0895D95eA659B1" 
+      abi: DittoPancake
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+          - Approval(indexed address,indexed address,uint256)
+          - LogRebase(indexed uint256,uint256)
+          - OwnershipRenounced(indexed address)
+          - OwnershipTransferred(indexed address,indexed address)
+          - Transfer(indexed address,indexed address,uint256)
+      abis:
+        - name: DittoPancake
+          file: ./abis/DittoPancake.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: LogRebase(indexed uint256,uint256)
+          handler: handleLogRebase
+        - event: OwnershipRenounced(indexed address)
+          handler: handleOwnershipRenounced
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
